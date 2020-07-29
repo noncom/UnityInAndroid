@@ -19,7 +19,7 @@ CameraPluginWrapper.cs is still the main interface with the Unity project)
 
 # To use this project:
 
-1. In Unity
+### 1. In Unity
 
 - Make use of the CameraPluginWrapper.cs script in your Unity Project
 - Set Scripting Backend to IL2CPP in Unity Player Settings
@@ -28,13 +28,13 @@ CameraPluginWrapper.cs is still the main interface with the Unity project)
 - Set the minimum AP level to API Level 22.
 - Export the project as Android Project
 
-2. In the exported Android project
+### 2. In the exported Android project
 
 - Open the exported project in Android Studio, choose the newer SDK version if asked
 - Update the Gradle plugin if asked
 - Remove the "launcher" module from `settings.gradle`
 - Build the project and collect the *aar* artifact
 
-3. Preparing for build
+###  3. Preparing for build
 
 - Put the *aar* artifact in the "unityLibrary-debug" module folder of this project (notice: it's gitignored by default)
