@@ -27,17 +27,17 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 {
 	if (g_TexturePointer)
 	{
-        LOGD("########################## ON RENDER EVENT A gCallbackObject=%p, env=%p\n", gCallbackObject, gJavaVM);
+        //LOGD("########################## ON RENDER EVENT A gCallbackObject=%p, env=%p\n", gCallbackObject, gJavaVM);
 		int status;
 		JNIEnv *env;
 		int isAttached = 0;
 
 		if (!gCallbackObject) {
-            LOGD("########################## ON RENDER EVENT A-1 returning!");
+            //LOGD("########################## ON RENDER EVENT A-1 returning!");
             return;
         }
 
-        LOGD("########################## ON RENDER EVENT B texturePtr=%p\n", g_TexturePointer);
+        //LOGD("########################## ON RENDER EVENT B texturePtr=%p\n", g_TexturePointer);
 
 		if ((status = gJavaVM->GetEnv((void **)&env, JNI_VERSION_1_6)) < 0)
 		{
@@ -48,7 +48,7 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 			isAttached = 1;
 		}
 
-        LOGD("########################## ON RENDER EVENT C gCallbackObject=%p\n", gCallbackObject);
+        //LOGD("########################## ON RENDER EVENT C gCallbackObject=%p\n", gCallbackObject);
 
 		jclass cls = env->GetObjectClass(gCallbackObject);
 		if (!cls)
@@ -58,7 +58,7 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 			return;
 		}
 
-        LOGD("########################## ON RENDER EVENT D texturePtr=%p\n", g_TexturePointer);
+        //LOGD("########################## ON RENDER EVENT D texturePtr=%p\n", g_TexturePointer);
 
 		jmethodID method = env->GetMethodID(cls, "requestJavaRendering", "(I)V");
 		if (!method)
@@ -68,17 +68,17 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 			return;
 		}
 
-        LOGD("########################## ON RENDER EVENT E texturePtr=%p\n", g_TexturePointer);
+        //LOGD("########################## ON RENDER EVENT E texturePtr=%p\n", g_TexturePointer);
 
 		GLuint gltex = (GLuint)(size_t)(g_TexturePointer);
 		env->CallVoidMethod(gCallbackObject, method, (int)gltex);
 
-        LOGD("########################## ON RENDER EVENT F texturePtr=%p\n", g_TexturePointer);
+        //LOGD("########################## ON RENDER EVENT F texturePtr=%p\n", g_TexturePointer);
 
 		if (isAttached)
 			gJavaVM->DetachCurrentThread();
 
-        LOGD("########################## ON RENDER EVENT G texturePtr=%p\n", g_TexturePointer);
+        //LOGD("########################## ON RENDER EVENT G texturePtr=%p\n", g_TexturePointer);
 	}
 }
 
@@ -99,14 +99,14 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
 extern "C" JNIEXPORT void JNICALL
 Java_com_example_cameracapturenative_CameraPluginActivity_nativeInit(JNIEnv *env, jobject obj)
 {
-	LOGD("########################## NATIVE INIT");
+	//LOGD("########################## NATIVE INIT");
 	gCallbackObject = env->NewGlobalRef(obj);
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_example_cameracapturenative_CameraPluginActivity_nativeRelease(JNIEnv *env, jobject obj)
 {
-    LOGD("########################## NATIVE RELEASE");
+    //LOGD("########################## NATIVE RELEASE");
 	env->DeleteGlobalRef(gCallbackObject);
 	gCallbackObject = NULL;
 }
